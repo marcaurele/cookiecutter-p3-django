@@ -7,7 +7,7 @@ A cookiecutter_ template for Django using Python 3.
 
 Usage
 -----
-*The post generation hook script will not work on Windows.*::
+*The post generation hook script will not work on Windows.* ::
 
     $ pip install cookiecutter
     $ cookiecutter https://github.com/marcaurele/cookiecutter-p3-django.git
