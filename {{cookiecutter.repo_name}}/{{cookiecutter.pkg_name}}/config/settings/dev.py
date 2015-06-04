@@ -4,8 +4,7 @@ from .base import *
 
 # DEBUG
 # ------------------------------------------------------------------------------
-
-DEBUG = env.bool('DJANGO_DEBUG', default=True)
+DEBUG = env('DJANGO_DEBUG', default=True)
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 # SECRET CONFIGURATION
@@ -14,10 +13,30 @@ TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 # Note: This key only used for development and testing.
 SECRET_KEY = env('DJANGO_SECRET_KEY', default='CHANGEME!!!')
 
+# DATABASE
+# ------------------------------------------------------------------------------
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '{{cookiecutter.app_name}}',
+        'USER': '{{cookiecutter.app_name}}',
+        'PASSWORD': '{{cookiecutter.app_name}}',
+        'HOST': '127.0.0.1',
+        'PORT': '',
+    }
+}
 
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-
+# FILES/MEDIA
+# ------------------------------------------------------------------------------
+MEDIA_ROOT = os.path.join(SITE_DIR, 'upload')
+MEDIA_URL = '/files/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(SITE_DIR, 'static'),
+)
 
 # Mail settings
 # ------------------------------------------------------------------------------

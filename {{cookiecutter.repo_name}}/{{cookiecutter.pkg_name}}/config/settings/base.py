@@ -13,28 +13,30 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import environ
 
-env = environ.Env()
+def env(var_name, default=None):
+    """
+    To retrieve vars from environment variables. 
+    """
+    if var_name in os.environ:
+        return os.environ[var_name]
+    elif default is not None:
+        return default
+    else:
+        raise ImproperlyConfigured(
+            "Set the %s environment variable" % var_name)
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+    '..', '..')
+SITE_DIR = os.path.join(BASE_DIR, 'site')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = []
-
-
 # Application definition
-
-INSTALLED_APPS = (
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
+DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +44,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
+THIRD_PARTY_APPS = ()
+LOCAL_APPS = ()
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,12 +59,14 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = '{{cookiecutter.pkg_name}}.config.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,23 +79,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = '{{cookiecutter.pkg_name}}.config.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = '{{cookiecutter.timezone}}'
@@ -99,14 +94,22 @@ USE_L10N = True
 
 USE_TZ = True
 
+# LOCALES
+# ------------------------------------------------------------------------------
+from django.utils.translation import ugettext_lazy as _
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+LANGUAGES = (
+    ('en', _('English')),
+    ('fr', _('French')),
+)
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
-STATIC_URL = '/static/'
 
+# EXTRA SETTINGS
+# ------------------------------------------------------------------------------
 ADMINS = (
     ('{{cookiecutter.full_name}}', '{{cookiecutter.email}}'),
 )
-
 MANAGERS = ADMINS
