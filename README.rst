@@ -5,12 +5,14 @@ A cookiecutter_ template for Django using Python 3.
 
 .. _cookiecutter: https://github.com/audreyr/cookiecutter
 
+
 Usage
 -----
 *The post generation hook script will not work on Windows.* ::
 
     $ pip install cookiecutter
     $ cookiecutter https://github.com/marcaurele/cookiecutter-p3-django.git
+
 
 What's inside
 -------------
@@ -28,7 +30,11 @@ in the requirement files to download latest ones*):
 - django-extensions
 - django-debug-toolbar
 
+It will generate 2 locales *EN* and *FR* and load rosetta app in development.
+
+
 Configurations
 --------------
 
 The production config file must be edited to set a couple of values.
+
