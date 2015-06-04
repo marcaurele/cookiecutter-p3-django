@@ -1,0 +1,6 @@
+{
+  "project_name": "My New Project",
+  "repo_name": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+  "pkg_name": "{{ cookiecutter.project_name|lower|replace(' ', '_') }}",
+  "timezone": "Europe/Zurich"
+}

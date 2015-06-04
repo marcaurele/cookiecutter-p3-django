@@ -1,0 +1,4 @@
+# requirements/dev.txt
+-r common.txt
+django-extensions
+django-debug-toolbar

@@ -1,0 +1,10 @@
+# requirements/common.txt
+Django
+psycopg2
+pytz
+django-model-utils
+django-braces
+django-rosetta
+
+#djangorestframework
+#django-autoslug

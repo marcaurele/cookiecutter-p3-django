@@ -1,0 +1,4 @@
+# requirements/prod.txt
+-r common.txt
+# Needed on AA
+flup
